@@ -1,0 +1,5 @@
+alibabacloud_ocr-api20210707<2.0.0,>=1.2.0
+alibabacloud_tea_openapi<1.0.0,>=0.3.6
+alibabacloud_tea_console<1.0.0,>=0.0.1
+alibabacloud_tea_util<1.0.0,>=0.3.11
+alibabacloud_darabonba_stream<1.0.0,>=0.0.1
