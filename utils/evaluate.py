@@ -10,7 +10,10 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # test_loader = DataLoader(dataset=test_dataset, batch_size=1, shuffle=False)
 
 
-def evaluate(model, criterion, test_loader):
+def evaluate(
+        model: nn.Module,
+        criterion: torch.optim,
+        test_loader: DataLoader):
     total = 0
     correct = 0
 
