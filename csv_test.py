@@ -14,7 +14,7 @@ data_to_write = [
 ]
 
 # 指定CSV文件的名称
-csv_file_name = "1.csv"
+csv_file_name = "test.csv"
 
 # 逐行写入数据，每次增加一行都打开并关闭文件
 for row in data_to_write:

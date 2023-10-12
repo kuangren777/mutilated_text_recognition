@@ -9,6 +9,7 @@ import os
 import sys
 import read_ini
 import json
+import csv
 
 from typing import List
 
@@ -19,9 +20,13 @@ from alibabacloud_tea_util import models as util_models
 
 ini = read_ini.get_config()
 
+# 指定CSV文件的名称
+csv_file_name = "predict_accuracy.csv"
+
 # 从JSON文件中加载字典
 with open('my_dict.json', 'r') as file:
     loaded_dict = json.load(file)
+
 
 def count_chinese_characters(text, character):
     count = 0
@@ -85,13 +90,13 @@ class Sample:
         return params
 
     @staticmethod
-    def main(index: int) -> (int, int):
+    def main(index: int) -> (int, int, str):
         # 请确保代码运行环境设置了环境变量 ALIBABA_CLOUD_ACCESS_KEY_ID 和 ALIBABA_CLOUD_ACCESS_KEY_SECRET。
         # 工程代码泄露可能会导致 AccessKey 泄露，并威胁账号下所有资源的安全性。以下代码示例使用环境变量获取 AccessKey 的方式进行调用，仅供参考，建议使用更安全的 STS 方式，更多鉴权访问方式请参见：https://help.aliyun.com/document_detail/378659.html
         client = Sample.create_client(ini['access_id'], ini['secret'])
         params = Sample.create_api_info()
         # 需要安装额外的依赖库，直接点击下载完整工程即可看到所有依赖。
-        body = StreamClient.read_from_file_path('./data/big_picture/0.png')
+        body = StreamClient.read_from_file_path(f'./data/big_picture/{index}.png')
         # runtime options
         runtime = util_models.RuntimeOptions()
         request = open_api_models.OpenApiRequest(
@@ -101,14 +106,15 @@ class Sample:
         # 返回值为 Map 类型，可从 Map 中获得三类数据：响应体 body、响应头 headers、HTTP 返回的状态码 statusCode。
         response = client.call_api(params, request, runtime)
 
-        print(json.loads(response['body']['Data'])['content'])
+        text = json.loads(response['body']['Data'])['content']
+        count = count_chinese_characters(text, loaded_dict[f'{index}'])
 
-        count = count_chinese_characters(json.loads(response['body']['Data'])['content'], loaded_dict[index])
-
-        return index, count
+        print(f'index:{index}')
+        print(f'count:{count}')
+        return index, count, text
 
     @staticmethod
-    async def main_async(index: int) -> (int, int):
+    async def main_async(index: int) -> (int, int, str):
         # 请确保代码运行环境设置了环境变量 ALIBABA_CLOUD_ACCESS_KEY_ID 和 ALIBABA_CLOUD_ACCESS_KEY_SECRET。
         # 工程代码泄露可能会导致 AccessKey 泄露，并威胁账号下所有资源的安全性。以下代码示例使用环境变量获取 AccessKey 的方式进行调用，仅供参考，建议使用更安全的 STS 方式，更多鉴权访问方式请参见：https://help.aliyun.com/document_detail/378659.html
         client = Sample.create_client(ini['access_id'], ini['secret'])
@@ -123,23 +129,50 @@ class Sample:
         # 复制代码运行请自行打印 API 的返回值
         # 返回值为 Map 类型，可从 Map 中获得三类数据：响应体 body、响应头 headers、HTTP 返回的状态码 statusCode。
         response = await client.call_api_async(params, request, runtime)
+        text = json.loads(response['body']['Data'])['content']
+        count = count_chinese_characters(text, loaded_dict[f'{index}'])
 
-        count = count_chinese_characters(json.loads(response['body']['Data'])['content'], loaded_dict[index])
-
-        return index, count
+        print(f'index:{index}')
+        print(f'count:{count}')
+        return index, count, text
 
 
 # if __name__ == '__main__':
 #     Sample.main(sys.argv[1:])
 
+# if __name__ == '__main__':
+#     import asyncio
+#
+#     results = []
+#
+#     async def run_all():
+#         result = await asyncio.gather(*(Sample.main_async(i) for i in range(621)))
+#         results.append(result)
+#         print(result)
+#
+#     asyncio.run(run_all())
+#
+#     print(results)
+
+
 if __name__ == '__main__':
-    import asyncio
+    import concurrent.futures
 
     results = []
 
-    async def run_all():
-        result = await asyncio.gather(*(Sample.main_async(i) for i in range(621)))
-        results.append(result)
-        print(result)
+    # 使用线程池并发处理，max_workers 控制并发数
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        # map 方法会为函数参数中的每一个元素创建一个新的线程
+        for result in executor.map(Sample.main, range(621)):
+            results.append(result)
+            print(f'\naaaaaaaaaaaa{result}aaaaaaaaaaaaaaaaa\n')
 
-    asyncio.run(run_all())
+    print(results)
+
+    # 逐行写入数据，每次增加一行都打开并关闭文件
+    for row in results:
+        with open(csv_file_name, mode="a", newline="", encoding="gbk") as file:
+            writer = csv.writer(file)
+            writer.writerow(row)
+
+    print(f"{len(results)} 行数据已成功写入 {csv_file_name} 文件。")
