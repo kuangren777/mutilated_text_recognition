@@ -6,3 +6,6 @@ config.ini
 ./data/val/
 .idea/
 ./data/big_picture/
+/models/17895/
+/models/27314/
+/models/31812/

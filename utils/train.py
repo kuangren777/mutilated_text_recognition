@@ -50,9 +50,9 @@ def train(
                 print(f'Epoch [{epoch + 1}/{num_epochs}], Step [{i + 1}/{total_step}], Loss: {loss.item():.4f}')
 
             if (i + 1) % (1699 * 256 // batch_size // 5) == 0:
-                if not os.path.exists('models'):
-                    os.mkdir('models')
-                torch.save(model.state_dict(), f'models/cnn{id}_{epoch}_{i + 1}.pth')
+                if not os.path.exists(f'models/{id}'):
+                    os.mkdir(f'models/{id}')
+                torch.save(model.state_dict(), f'models/{id}/cnn{id}_{epoch}_{i + 1}.pth')
 
         # verification model each episode
         with torch.no_grad():

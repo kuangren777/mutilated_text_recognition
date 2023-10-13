@@ -18,8 +18,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # set hyperparameters
 num_epochs = 100
 # batch_size = 256
-batch_size = 32
-learning_rate = 0.01
+batch_size = 128
+learning_rate = 0.003
 LOG = True
 ATTENTION = True
 
@@ -59,9 +59,9 @@ while True:
             epp = input('Please input the epoch:')
             # define model
             if ATTENTION:
-                model.load_state_dict(torch.load(f'models/cnn_with_attention{load_id}_{epp}.pth'))
+                model.load_state_dict(torch.load(f'models/{load_id}/cnn_with_attention{load_id}_{epp}.pth'))
             else:
-                model.load_state_dict(torch.load(f'models/cnn{load_id}_{epp}.pth'))
+                model.load_state_dict(torch.load(f'models/{load_id}/cnn{load_id}_{epp}.pth'))
             model.eval().to(device)
         else:
             if ATTENTION:
@@ -72,7 +72,7 @@ while True:
                 model = CNN(num_classes=num_classes).to(device)
 
         note = input('NOTE:')
-        csv_writer('train_id_note.csv', [id, ATTENTION, batch_size, learning_rate, note])
+        csv_writer('train_id_note.csv', [id, ATTENTION, batch_size, learning_rate, note], True)
 
         # train model
         train(
@@ -89,12 +89,12 @@ while True:
         )
 
         # save model
-        if not os.path.exists('models'):
-            os.mkdir('models')
+        if not os.path.exists(f'models/{id}'):
+            os.mkdir(f'models/{id}')
         if ATTENTION:
-            torch.save(model.state_dict(), f'models/cnn_with_attention{id}.pth')
+            torch.save(model.state_dict(), f'models/{id}/cnn_with_attention{id}.pth')
         else:
-            torch.save(model.state_dict(), f'models/cnn{id}.pth')
+            torch.save(model.state_dict(), f'models/{id}/cnn{id}.pth')
 
     elif choice == '2':
         if ATTENTION:
@@ -102,7 +102,7 @@ while True:
             model = CNNWithAttention(num_classes=num_classes).to(device)
             id = input('Please input the ID of the model to be loaded:')
             ep = input('Please input the epoch:')
-            model.load_state_dict(torch.load(f'models/cnn_with_attention{id}_{ep}.pth'))
+            model.load_state_dict(torch.load(f'models/{id}/cnn_with_attention{id}_{ep}.pth'))
             model.eval().to(device)
 
             # evaluate model
@@ -112,7 +112,7 @@ while True:
             model = CNN(num_classes=num_classes).to(device)
             id = input('Please input the ID of the model to be loaded:')
             ep = input('Please input the epoch:')
-            model.load_state_dict(torch.load(f'models/cnn{id}_{ep}.pth'))
+            model.load_state_dict(torch.load(f'models/{id}/cnn{id}_{ep}.pth'))
             model.eval().to(device)
 
             # evaluate model
@@ -124,14 +124,14 @@ while True:
             model = CNNWithAttention(num_classes=num_classes).to(device)
             id = input('Please input the ID of the model to be loaded:')
             ep = input('Please input the epoch:')
-            model.load_state_dict(torch.load(f'models/cnn_with_attention{id}_{ep}.pth'))
+            model.load_state_dict(torch.load(f'models/{id}/cnn_with_attention{id}_{ep}.pth'))
             model.eval().to(device)
         else:
             # load model
             model = CNN(num_classes=num_classes).to(device)
             id = input('Please input the ID of the model to be loaded:')
             ep = input('Please input the epoch:')
-            model.load_state_dict(torch.load(f'models/cnn{id}_{ep}.pth'))
+            model.load_state_dict(torch.load(f'models/{id}/cnn{id}_{ep}.pth'))
             model.eval().to(device)
 
         image_path = input('Please input the path of img: ')

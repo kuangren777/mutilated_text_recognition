@@ -1,3 +1,5 @@
-id,attention,batch,lr,note
+id,attention,batch,lr,note,time
 17895,True,256,0.01,
 13897,True,32,0.01,
+58444,True,128,0.003,,2023-10-13 13:39:30
+53852,True,128,0.003,,2023-10-13 13:45:59
