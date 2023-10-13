@@ -9,10 +9,9 @@ from torch.utils.tensorboard import SummaryWriter
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-id = random.randint(10000, 99999)
-
 
 def train(
+        id: int,
         model: nn.Module,
         optimizer: torch.optim,
         criterion: nn.CrossEntropyLoss,
@@ -20,7 +19,8 @@ def train(
         val_loader: DataLoader,
         num_epochs: int,
         log: bool,
-        attention: bool) -> int:
+        attention: bool,
+        batch_size: int) -> None:
     if log:
         if attention:
             writer = SummaryWriter(log_dir=f'runs/cnn_with_attention{id}')
@@ -44,12 +44,12 @@ def train(
 
             # 使用 writer 添加想要在 TensorBoard 中查看的数据
             if log:
-                writer.add_scalar("Step Loss", loss.item(), epoch * 1700 + i + 1)
+                writer.add_scalar("Step Loss", loss.item(), epoch * 1699 * 256 // batch_size + i + 1)
 
-            if (i + 1) % 10 == 0:
+            if (i + 1) % 50 == 0:
                 print(f'Epoch [{epoch + 1}/{num_epochs}], Step [{i + 1}/{total_step}], Loss: {loss.item():.4f}')
 
-            if (i + 1) % 200 == 0:
+            if (i + 1) % (1699 * 256 // batch_size // 5) == 0:
                 if not os.path.exists('models'):
                     os.mkdir('models')
                 torch.save(model.state_dict(), f'models/cnn{id}_{epoch}_{i + 1}.pth')
@@ -73,5 +73,3 @@ def train(
 
     if log:
         writer.close()
-
-    return id

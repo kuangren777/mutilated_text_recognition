@@ -11,13 +11,14 @@ from PIL import Image
 from torchvision.datasets import ImageFolder
 from torchvision import transforms
 import random
-from torch.utils.tensorboard import SummaryWriter
+from csv_writer import csv_writer
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # set hyperparameters
 num_epochs = 100
-batch_size = 256
+# batch_size = 256
+batch_size = 32
 learning_rate = 0.01
 LOG = True
 ATTENTION = True
@@ -52,14 +53,15 @@ while True:
     choice = input('Input your choice: ')
 
     if choice == '1':
-        idd = input('Please input the ID of the model to be loaded, enter 0 if you dont have it:')
-        if idd != '0':
+        load_id = input('Please input the ID of the model to be loaded, enter 0 if you dont have it:')
+        id = random.randint(10000, 99999)
+        if load_id != '0':
             epp = input('Please input the epoch:')
             # define model
             if ATTENTION:
-                model.load_state_dict(torch.load(f'models/cnn_with_attention{idd}_{epp}.pth'))
+                model.load_state_dict(torch.load(f'models/cnn_with_attention{load_id}_{epp}.pth'))
             else:
-                model.load_state_dict(torch.load(f'models/cnn{idd}_{epp}.pth'))
+                model.load_state_dict(torch.load(f'models/cnn{load_id}_{epp}.pth'))
             model.eval().to(device)
         else:
             if ATTENTION:
@@ -69,8 +71,12 @@ while True:
                 # define model
                 model = CNN(num_classes=num_classes).to(device)
 
+        note = input('NOTE:')
+        csv_writer('train_id_note.csv', [id, ATTENTION, batch_size, learning_rate, note])
+
         # train model
-        id = train(
+        train(
+            id=id,
             model=model,
             optimizer=optimizer,
             criterion=criterion,
@@ -78,7 +84,8 @@ while True:
             val_loader=val_loader,
             num_epochs=num_epochs,
             log=LOG,
-            attention=ATTENTION
+            attention=ATTENTION,
+            batch_size=batch_size,
         )
 
         # save model
