@@ -11,14 +11,15 @@ from PIL import Image
 from torchvision.datasets import ImageFolder
 from torchvision import transforms
 import random
+from torch.utils.tensorboard import SummaryWriter
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # set hyperparameters
 num_epochs = 100
 batch_size = 256
-learning_rate = 0.001
-ATTENTION = False
+learning_rate = 0.01
+LOG = True
 
 train_dataset = CustomDataset('data/', 'train')
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
@@ -76,7 +77,9 @@ while True:
             criterion=criterion,
             train_loader=train_loader,
             val_loader=val_loader,
-            num_epochs=num_epochs
+            num_epochs=num_epochs,
+            log=LOG,
+            attention=ATTENTION
         )
 
         # save model
