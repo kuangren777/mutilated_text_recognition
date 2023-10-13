@@ -20,6 +20,7 @@ num_epochs = 100
 batch_size = 256
 learning_rate = 0.01
 LOG = True
+ATTENTION = True
 
 train_dataset = CustomDataset('data/', 'train')
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
@@ -44,8 +45,6 @@ else:
 
 # UI
 while True:
-    attention_flag = input('Attention? ([y]/n):')
-    ATTENTION = False if attention_flag == 'n' else True
     print('1. Train model')
     print('2. Evaluate model')
     print('3. Test by single img')
