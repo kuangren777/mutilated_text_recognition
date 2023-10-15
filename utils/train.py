@@ -6,8 +6,21 @@ from models.cnn import CNN
 import os
 import random
 from torch.utils.tensorboard import SummaryWriter
+from torch.optim.lr_scheduler import CosineAnnealingLR
+from torch.utils.data import DataLoader, SubsetRandomSampler
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+def get_val_subset_loader(val_loader, num_samples=1000):
+    # 获取验证集的索引列表
+    indices = list(range(len(val_loader.dataset)))
+    # 随机选择1000个索引
+    random.shuffle(indices)
+    indices = indices[:num_samples]
+    sampler = SubsetRandomSampler(indices)
+
+    return DataLoader(val_loader.dataset, batch_size=val_loader.batch_size, sampler=sampler)
 
 
 def train(
@@ -20,7 +33,10 @@ def train(
         num_epochs: int,
         log: bool,
         attention: bool,
-        batch_size: int) -> None:
+        batch_size: int,
+        scheduler: CosineAnnealingLR) -> None:
+    model = model.to(device)
+
     if log:
         if attention:
             writer = SummaryWriter(log_dir=f'runs/cnn_with_attention{id}')
@@ -35,9 +51,10 @@ def train(
             # print(i)
 
             images = images.to(device)
-            outputs = model(images).to(device)
+            outputs = model(images)
             labels = labels.to(device)
-            loss = criterion(outputs, labels).to(device, non_blocking=True)
+            loss = criterion(outputs, labels).to(device)
+
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -54,11 +71,13 @@ def train(
                     os.mkdir(f'models/{id}')
                 torch.save(model.state_dict(), f'models/{id}/cnn{id}_{epoch}_{i + 1}.pth')
 
+        # 使用新的验证子集加载器
+        val_subset_loader = get_val_subset_loader(val_loader)
         # verification model each episode
         with torch.no_grad():
             correct = 0
             total = 0
-            for images, labels in val_loader:
+            for images, labels in val_subset_loader:  # 使用 val_subset_loader 替代 val_loader
                 images = images.to(device)
                 labels = labels.to(device)
                 outputs = model(images)
@@ -70,6 +89,9 @@ def train(
 
             if log:
                 writer.add_scalar('Epoch Accuracy', 100 * correct / total, epoch + 1)
+
+        # 在epoch结束时更新学习率
+        scheduler.step()
 
     if log:
         writer.close()

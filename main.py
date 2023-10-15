@@ -15,6 +15,7 @@ from csv_writer import csv_writer
 import numpy as np
 from torch.optim.lr_scheduler import CosineAnnealingLR
 
+
 def set_random_seeds(seed):
     # 设置PyTorch的随机种子
     torch.manual_seed(seed)
@@ -32,6 +33,7 @@ def set_random_seeds(seed):
     random_seed = int.from_bytes(random_bytes, byteorder="big")
     random.seed(random_seed)
 
+
 # 使用示例
 seed_value = 42  # 你可以选择任何整数作为种子值
 set_random_seeds(seed_value)
@@ -40,7 +42,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # set hyperparameters
 num_epochs = 100
-batch_size = 256
+batch_size = 512
 # batch_size = 128
 learning_rate = 0.005
 # 在定义优化器后添加余弦退火学习率调度器
@@ -114,6 +116,7 @@ while True:
             log=LOG,
             attention=ATTENTION,
             batch_size=batch_size,
+            scheduler=scheduler
         )
 
         # save model
