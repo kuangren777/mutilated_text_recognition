@@ -34,8 +34,8 @@ def set_random_seeds(seed):
     random.seed(random_seed)
 
 
-# 使用示例
-seed_value = 42  # 你可以选择任何整数作为种子值
+id = random.randint(10000, 99999)
+seed_value = id  # 你可以选择任何整数作为种子值
 set_random_seeds(seed_value)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -84,7 +84,6 @@ while True:
 
     if choice == '1':
         load_id = input('Please input the ID of the model to be loaded, enter 0 if you dont have it:')
-        id = random.randint(10000, 99999)
         if load_id != '0':
             epp = input('Please input the epoch:')
             # define model
