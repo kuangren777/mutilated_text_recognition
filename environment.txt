@@ -1,139 +1,90 @@
-# This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
-# platform: win-64
-absl-py=1.4.0=pypi_0
-attrs=22.2.0=pypi_0
-backcall=0.2.0=pyhd3eb1b0_0
-blas=1.0=mkl
-bottleneck=1.3.5=py37h080aedc_0
-brotli=1.0.9=h2bbff1b_7
-brotli-bin=1.0.9=h2bbff1b_7
-ca-certificates=2022.12.7=h5b45459_0
-cachetools=5.3.0=pypi_0
-cattrs=1.0.0=pypi_0
-certifi=2022.12.7=pyhd8ed1ab_0
-click=8.0.3=pyhd3eb1b0_0
-cloudpickle=2.2.1=pypi_0
-colorama=0.4.6=py37haa95532_0
-cycler=0.11.0=pyhd3eb1b0_0
-decorator=5.1.1=pyhd3eb1b0_0
-eigen=3.4.0=h2d74725_0
-ffmpeg=4.2.3=ha925a31_0
-filelock=3.9.0=pypi_0
-flask=2.2.2=py37haa95532_0
-flit-core=3.6.0=pyhd3eb1b0_0
-fonttools=4.25.0=pyhd3eb1b0_0
-freetype=2.12.1=ha860e81_0
-giflib=5.2.1=h8cc25b3_3
-glib=2.69.1=h5dc1a3c_2
-google-auth=2.16.2=pypi_0
-google-auth-oauthlib=0.4.6=pypi_0
-grpcio=1.51.3=pypi_0
-gst-plugins-base=1.18.5=h9e645db_0
-gstreamer=1.18.5=hd78058f_0
-gym=0.10.5=pypi_0
-gym-notices=0.0.8=pypi_0
-gymnasium=0.27.1=pypi_0
-gymnasium-notices=0.0.1=pypi_0
-h5py=3.8.0=pypi_0
-hdf5=1.10.6=nompi_he0bbb20_101
-icu=58.2=ha925a31_3
-importlib-metadata=4.11.3=py37haa95532_0
-intel-openmp=2021.4.0=haa95532_3556
-ipython=7.31.1=py37haa95532_1
-itsdangerous=2.0.1=pyhd3eb1b0_0
-jax-jumpy=0.2.0=pypi_0
-jedi=0.18.1=py37haa95532_1
-jinja2=3.1.2=py37haa95532_0
-jpeg=9e=h2bbff1b_1
-kiwisolver=1.4.4=py37hd77b12b_0
-lerc=3.0=hd77b12b_0
-libbrotlicommon=1.0.9=h2bbff1b_7
-libbrotlidec=1.0.9=h2bbff1b_7
-libbrotlienc=1.0.9=h2bbff1b_7
-libclang=12.0.0=default_h627e005_2
-libdeflate=1.17=h2bbff1b_0
-libffi=3.4.2=hd77b12b_6
-libiconv=1.16=h2bbff1b_2
-libogg=1.3.5=h2bbff1b_1
-libpng=1.6.39=h8cc25b3_0
-libprotobuf=3.20.3=h23ce68f_0
-libtiff=4.5.0=h6c2663c_2
-libvorbis=1.3.7=he774522_0
-libwebp=1.2.4=hbc33d0d_1
-libwebp-base=1.2.4=h2bbff1b_1
-libxml2=2.9.14=h0ad7f3c_0
-libxslt=1.1.35=h2bbff1b_0
-lz4-c=1.9.4=h2bbff1b_0
-markdown=3.4.1=pypi_0
-markupsafe=2.1.1=py37h2bbff1b_0
-matplotlib=3.5.3=py37haa95532_0
-matplotlib-base=3.5.3=py37hd77b12b_0
-matplotlib-inline=0.1.6=py37haa95532_0
-mkl=2021.4.0=haa95532_640
-mkl-service=2.4.0=py37h2bbff1b_0
-mkl_fft=1.3.1=py37h277e83a_0
-mkl_random=1.2.2=py37hf11a4ad_0
-mlagents=0.27.0=pypi_0
-mlagents-envs=0.27.0=pypi_0
-munkres=1.1.4=py_0
-numexpr=2.8.4=py37h5b0cc5e_0
-numpy=1.21.2=pypi_0
-numpy-base=1.21.5=py37hca35cd5_3
-oauthlib=3.2.2=pypi_0
-opencv=4.6.0=py37hf11a4ad_3
-opencv-python=4.7.0.72=pypi_0
-openssl=1.1.1t=h2bbff1b_0
-packaging=22.0=py37haa95532_0
-pandas=1.3.5=py37h6214cd6_0
-parso=0.8.3=pyhd3eb1b0_0
-pcre=8.45=hd77b12b_0
-pettingzoo=1.22.3=pypi_0
-pickleshare=0.7.5=pyhd3eb1b0_1003
-pillow=9.4.0=py37hd77b12b_0
-pip=23.0.1=pypi_0
-plotly=5.9.0=py37haa95532_0
-ply=3.11=py37_0
-prompt-toolkit=3.0.36=py37haa95532_0
-protobuf=3.20.3=pypi_0
-pyasn1=0.4.8=pypi_0
-pyasn1-modules=0.2.8=pypi_0
-pyglet=1.2.4=pypi_0
-pygments=2.11.2=pyhd3eb1b0_0
-pyparsing=3.0.9=py37haa95532_0
-pypiwin32=223=pypi_0
-pyqt=5.15.7=py37hd77b12b_0
-pyqt5-sip=12.11.0=py37hd77b12b_0
-python=3.7.16=h6244533_0
-python-dateutil=2.8.2=pyhd3eb1b0_0
-pytz=2022.7=py37haa95532_0
-pywin32=305=pypi_0
-pyyaml=6.0=pypi_0
-qt-main=5.15.2=he8e5bd7_7
-qt-webengine=5.15.9=hb9a9bb5_5
-qtwebkit=5.212=h3ad3cdb_4
-requests-oauthlib=1.3.1=pypi_0
-rsa=4.9=pypi_0
-setuptools=65.6.3=py37haa95532_0
-sip=6.6.2=py37hd77b12b_0
-six=1.16.0=pyhd3eb1b0_1
-sqlite=3.40.1=h2bbff1b_0
-tenacity=8.0.1=py37haa95532_1
-tensorboard=2.11.2=pypi_0
-tensorboard-data-server=0.6.1=pypi_0
-tensorboard-plugin-wit=1.8.1=pypi_0
-tk=8.6.12=h2bbff1b_0
-toml=0.10.2=pyhd3eb1b0_0
-tornado=6.2=py37h2bbff1b_0
-traitlets=5.7.1=py37haa95532_0
-typing_extensions=4.4.0=py37haa95532_0
-vc=14.2=h21ff451_1
-vs2015_runtime=14.27.29016=h5e58377_2
-wcwidth=0.2.5=pyhd3eb1b0_0
-werkzeug=2.2.2=py37haa95532_0
-wheel=0.38.4=py37haa95532_0
-wincertstore=0.2=py37haa95532_2
-xz=5.2.10=h8cc25b3_1
-zipp=3.11.0=py37haa95532_0
-zlib=1.2.13=h8cc25b3_0
-zstd=1.5.2=h19a0ad4_0
+absl-py==1.4.0
+attrs==22.2.0
+backcall @ file:///home/ktietz/src/ci/backcall_1611930011877/work
+Bottleneck @ file:///C:/Windows/Temp/abs_3198ca53-903d-42fd-87b4-03e6d03a8381yfwsuve8/croots/recipe/bottleneck_1657175565403/work
+cachetools==5.3.0
+cattrs==1.0.0
+certifi==2022.12.7
+charset-normalizer==3.1.0
+click==8.0.3
+cloudpickle==2.2.1
+colorama @ file:///C:/b/abs_a9ozq0l032/croot/colorama_1672387194846/work
+cycler @ file:///tmp/build/80754af9/cycler_1637851556182/work
+decorator @ file:///opt/conda/conda-bld/decorator_1643638310831/work
+filelock==3.9.0
+Flask @ file:///C:/b/abs_ef16l83sif/croot/flask_1671217367534/work
+flit_core @ file:///opt/conda/conda-bld/flit-core_1644941570762/work/source/flit_core
+fonttools==4.25.0
+google-auth==2.16.2
+google-auth-oauthlib==0.4.6
+grpcio==1.51.3
+gym==0.10.5
+gym-notices==0.0.8
+gymnasium==0.27.1
+gymnasium-notices==0.0.1
+h5py==3.8.0
+idna==3.4
+importlib-metadata @ file:///C:/ci/importlib-metadata_1648562631189/work
+ipython @ file:///C:/Windows/TEMP/abs_45b5zb1l7q/croots/recipe/ipython_1659529855872/work
+itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
+jax-jumpy==0.2.0
+jedi @ file:///C:/ci/jedi_1644297241925/work
+Jinja2 @ file:///C:/b/abs_7cdis66kl9/croot/jinja2_1666908141852/work
+kiwisolver @ file:///C:/b/abs_88mdhvtahm/croot/kiwisolver_1672387921783/work
+Markdown==3.4.1
+MarkupSafe @ file:///C:/ci/markupsafe_1654508076077/work
+matplotlib @ file:///C:/b/abs_ae02atcfur/croot/matplotlib-suite_1667356722968/work
+matplotlib-inline @ file:///C:/ci/matplotlib-inline_1661934089728/work
+mkl-fft==1.3.1
+mkl-random @ file:///C:/ci/mkl_random_1626186163140/work
+mkl-service==2.4.0
+mlagents==0.27.0
+mlagents-envs==0.27.0
+munkres==1.1.4
+numexpr @ file:///C:/b/abs_a7kbak88hk/croot/numexpr_1668713882979/work
+numpy @ file:///C:/ci/numpy_and_numpy_base_1653574840943/work
+oauthlib==3.2.2
+packaging @ file:///C:/b/abs_cfsup8ur87/croot/packaging_1671697442297/work
+pandas @ file:///C:/ci/pandas_1641461312795/work
+parso @ file:///opt/conda/conda-bld/parso_1641458642106/work
+PettingZoo==1.22.3
+pickleshare @ file:///tmp/build/80754af9/pickleshare_1606932040724/work
+Pillow==9.4.0
+pipdeptree==2.9.6
+plotly @ file:///C:/ci/plotly_1658160626155/work
+ply==3.11
+prompt-toolkit @ file:///C:/b/abs_6coz5_9f2s/croot/prompt-toolkit_1672387908312/work
+protobuf==3.20.3
+pyasn1==0.4.8
+pyasn1-modules==0.2.8
+pyglet==1.2.4
+Pygments @ file:///opt/conda/conda-bld/pygments_1644249106324/work
+pyparsing @ file:///C:/Users/BUILDE~1/AppData/Local/Temp/abs_7f_7lba6rl/croots/recipe/pyparsing_1661452540662/work
+pypiwin32==223
+PyQt5==5.15.7
+PyQt5-sip @ file:///C:/Windows/Temp/abs_d7gmd2jg8i/croots/recipe/pyqt-split_1659273064801/work/pyqt_sip
+python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+pytz @ file:///C:/b/abs_22fofvpn1x/croot/pytz_1671698059864/work
+pywin32==305
+PyYAML==6.0
+requests==2.28.2
+requests-oauthlib==1.3.1
+rsa==4.9
+sip @ file:///C:/Windows/Temp/abs_b8fxd17m2u/croots/recipe/sip_1659012372737/work
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+tenacity @ file:///C:/Windows/TEMP/abs_980d07a6-8e21-4174-9c17-7296219678ads7dhdov_/croots/recipe/tenacity_1657899108023/work
+tensorboard==2.11.2
+tensorboard-data-server==0.6.1
+tensorboard-plugin-wit==1.8.1
+toml @ file:///tmp/build/80754af9/toml_1616166611790/work
+torch==1.13.1+cu116
+torchaudio==0.13.1+cu116
+torchvision==0.14.1+cu116
+tornado @ file:///C:/ci/tornado_1662476933490/work
+traitlets @ file:///C:/b/abs_e5m_xjjl94/croot/traitlets_1671143896266/work
+typing_extensions==4.5.0
+urllib3==1.26.14
+wcwidth @ file:///Users/ktietz/demo/mc3/conda-bld/wcwidth_1629357192024/work
+Werkzeug @ file:///C:/b/abs_17q5kgb8bo/croot/werkzeug_1671216014857/work
+wincertstore==0.2
+zipp @ file:///C:/b/abs_b9jfdr908q/croot/zipp_1672387552360/work
