@@ -12,14 +12,39 @@ from torchvision.datasets import ImageFolder
 from torchvision import transforms
 import random
 from csv_writer import csv_writer
+import numpy as np
+from torch.optim.lr_scheduler import CosineAnnealingLR
+
+def set_random_seeds(seed):
+    # 设置PyTorch的随机种子
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+
+    # 设置Python内置random模块的随机种子
+    random.seed(seed)
+
+    # 设置NumPy的随机种子
+    np.random.seed(seed)
+
+    # 设置os模块的随机种子（这不是标准用法，os模块通常不用于生成随机数）
+    random_bytes = os.urandom(4)
+    random_seed = int.from_bytes(random_bytes, byteorder="big")
+    random.seed(random_seed)
+
+# 使用示例
+seed_value = 42  # 你可以选择任何整数作为种子值
+set_random_seeds(seed_value)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # set hyperparameters
 num_epochs = 100
-# batch_size = 256
-batch_size = 128
-learning_rate = 0.003
+batch_size = 256
+# batch_size = 128
+learning_rate = 0.005
+# 在定义优化器后添加余弦退火学习率调度器
+
 LOG = True
 ATTENTION = True
 
@@ -36,12 +61,15 @@ print(f'共有{num_classes}个汉字')
 if ATTENTION:
     # define model, optimizer, loss function
     model = CNNWithAttention(num_classes=num_classes).to(device)
-    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+    optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
+    scheduler = CosineAnnealingLR(optimizer, T_max=num_epochs, eta_min=0.0001)
     criterion = nn.CrossEntropyLoss().to(device)
+
 else:
     # define model, optimizer, loss function
     model = CNN(num_classes=num_classes).to(device)
-    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+    optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
+    scheduler = CosineAnnealingLR(optimizer, T_max=num_epochs, eta_min=0.0001)
     criterion = nn.CrossEntropyLoss().to(device)
 
 # UI

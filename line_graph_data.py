@@ -39,7 +39,7 @@ print(f'共有{num_classes}个汉字')
 
 # 定义模型和优化器
 model = CNN(num_classes=num_classes).to(device)
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 criterion = nn.CrossEntropyLoss().to(device)
 
 # 定义损失函数

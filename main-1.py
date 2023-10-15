@@ -53,7 +53,7 @@ test_loader = DataLoader(dataset=test_dataset, batch_size=1, shuffle=False)
 
 # 定义模型和优化器
 model = CNN(num_classes=num_classes)
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 criterion = nn.CrossEntropyLoss()
 
 # 训练模型
