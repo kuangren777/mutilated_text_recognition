@@ -86,6 +86,7 @@ while True:
         load_id = input('Please input the ID of the model to be loaded, enter 0 if you dont have it:')
         if load_id != '0':
             epp = input('Please input the epoch:')
+            set_random_seeds(load_id)
             # define model
             if ATTENTION:
                 model.load_state_dict(torch.load(f'models/{load_id}/cnn_with_attention{load_id}_{epp}.pth'))
