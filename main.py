@@ -39,15 +39,16 @@ seed_value = id  # 你可以选择任何整数作为种子值
 set_random_seeds(seed_value)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cpu")
 
 # set hyperparameters
 num_epochs = 100
-batch_size = 512
+batch_size = 1024
 # batch_size = 128
-learning_rate = 0.005
+learning_rate = 0.008
 # 在定义优化器后添加余弦退火学习率调度器
 
-LOG = True
+LOG = False
 ATTENTION = True
 
 train_dataset = CustomDataset('data/', 'train')
@@ -101,8 +102,9 @@ while True:
                 # define model
                 model = CNN(num_classes=num_classes).to(device)
 
-        note = input('NOTE:')
-        csv_writer('train_id_note.csv', [id, ATTENTION, batch_size, learning_rate, note], True)
+        if LOG:
+            note = input('NOTE:')
+            csv_writer('train_id_note.csv', [id, ATTENTION, batch_size, learning_rate, note], True)
 
         # train model
         train(

@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# @Time    : 2023/10/12 23:41
+# @Author  : KuangRen777
+# @File    : attention.py
+# @Tags    :
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, SubsetRandomSampler
