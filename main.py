@@ -13,7 +13,7 @@ from torchvision import transforms
 import random
 from csv_writer import csv_writer
 import numpy as np
-from torch.optim.lr_scheduler import CosineAnnealingLR
+from torch.optim.lr_scheduler import CosineAnnealingLR, StepLR
 
 
 def set_random_seeds(seed):
@@ -49,7 +49,7 @@ learning_rate = 0.008
 # 在定义优化器后添加余弦退火学习率调度器
 
 LOG = False
-ATTENTION = True
+ATTENTION = False
 
 train_dataset = CustomDataset('data/', 'train')
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
@@ -73,10 +73,14 @@ else:
     model = CNN(num_classes=num_classes).to(device)
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
     scheduler = CosineAnnealingLR(optimizer, T_max=num_epochs, eta_min=0.0001)
-    criterion = nn.CrossEntropyLoss().to(device)
+    criterion = nn.CrossEntropyLoss()
 
 # UI
 while True:
+
+    #model parameter check
+    #
+
     print('1. Train model')
     print('2. Evaluate model')
     print('3. Test by single img')
@@ -98,9 +102,15 @@ while True:
             if ATTENTION:
                 # define model
                 model = CNNWithAttention(num_classes=num_classes).to(device)
+                optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
+                scheduler = CosineAnnealingLR(optimizer, T_max=num_epochs, eta_min=0.0001)
+                criterion = nn.CrossEntropyLoss()
             else:
                 # define model
                 model = CNN(num_classes=num_classes).to(device)
+                optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
+                scheduler = CosineAnnealingLR(optimizer, T_max=num_epochs, eta_min=0.0001)
+                criterion = nn.CrossEntropyLoss()
 
         if LOG:
             note = input('NOTE:')

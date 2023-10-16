@@ -32,6 +32,8 @@ def parameters_changed(model, last_parameters):
     return False
 
 
+
+
 def train(
         id: int,
         model: nn.Module,
@@ -61,10 +63,11 @@ def train(
     total_step = len(train_loader)
     for epoch in range(num_epochs):
         for i, (images, labels) in enumerate(train_loader):
+
             images, labels = images.to(device), labels.to(device)
 
             outputs = model(images).to(device)
-            loss = criterion(outputs, labels).to(device)
+            loss = criterion(outputs, labels)
 
             optimizer.zero_grad()
             loss.backward()
@@ -75,9 +78,14 @@ def train(
             else:
                 print("Parameters did NOT change!")
 
+
+
             last_parameters = [p.clone().detach() for p in model.parameters()]
 
+
+
             if log and i % 50 == 0:
+                print(loss)
                 writer.add_scalar("Step Loss", loss.item(), epoch * total_step + i)
                 print(f'Epoch [{epoch + 1}/{num_epochs}], Step [{i + 1}/{total_step}], Loss: {loss.item():.4f}')
 
