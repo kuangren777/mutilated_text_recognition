@@ -118,6 +118,31 @@ def has_parameters_changed(model, last_parameters):
 #         writer.close()
 
 
+def parameters_changed(model):
+    """
+    检查模型的参数是否与上次保存的参数有所变化。
+
+    参数:
+        model (torch.nn.Module): 要检查的PyTorch模型
+
+    返回:
+        bool: 如果参数发生变化返回True，否则返回False
+    """
+    # 如果模型没有保存过参数，先保存一次
+    if not hasattr(model, 'last_parameters'):
+        model.last_parameters = [p.clone().detach() for p in model.parameters()]
+        return False  # 因为我们刚刚开始跟踪，所以我们可以假设没有变化
+
+    # 比较当前参数和上次保存的参数
+    for p, last_p in zip(model.parameters(), model.last_parameters):
+        if torch.any(p != last_p):
+            # 更新参数副本为当前模型的参数
+            model.last_parameters = [p.clone().detach() for p in model.parameters()]
+            return True
+
+    return False
+
+
 def train(
         id: int,
         model: nn.Module,
@@ -150,9 +175,7 @@ def train(
             loss.backward()
             optimizer.step()
 
-            # Check if parameters have changed
-            changed = any([torch.any(p.grad != 0) for p in model.parameters()])
-            if changed:
+            if parameters_changed(model):
                 print("Parameters changed!")
             else:
                 print("Parameters did NOT change!")
