@@ -48,8 +48,8 @@ batch_size = 1024
 learning_rate = 0.008
 # 在定义优化器后添加余弦退火学习率调度器
 
-LOG = False
-ATTENTION = False
+LOG = True
+ATTENTION = True
 
 train_dataset = CustomDataset('data/', 'train')
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
