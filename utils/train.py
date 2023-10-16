@@ -59,7 +59,7 @@ def train(
         log_path = f'runs/cnn_with_attention{id}' if attention else f'runs/cnn{id}'
         writer = SummaryWriter(log_dir=log_path)
 
-    last_parameters = [p.clone().detach() for p in model.parameters()]
+    # last_parameters = [p.clone().detach() for p in model.parameters()]
     total_step = len(train_loader)
     for epoch in range(num_epochs):
         for i, (images, labels) in enumerate(train_loader):
@@ -73,19 +73,19 @@ def train(
             loss.backward()
             optimizer.step()
 
-            if parameters_changed(model, last_parameters):
-                print("Parameters changed!")
-            else:
-                print("Parameters did NOT change!")
+            # if parameters_changed(model, last_parameters):
+            #     print("Parameters changed!")
+            # else:
+            #     print("Parameters did NOT change!")
 
 
 
-            last_parameters = [p.clone().detach() for p in model.parameters()]
+            # last_parameters = [p.clone().detach() for p in model.parameters()]
 
 
 
             if log and i % 50 == 0:
-                print(loss)
+                # print(loss)
                 writer.add_scalar("Step Loss", loss.item(), epoch * total_step + i)
                 print(f'Epoch [{epoch + 1}/{num_epochs}], Step [{i + 1}/{total_step}], Loss: {loss.item():.4f}')
 
