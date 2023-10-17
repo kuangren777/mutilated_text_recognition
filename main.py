@@ -77,10 +77,6 @@ else:
 
 # UI
 while True:
-
-    #model parameter check
-    #
-
     print('1. Train model')
     print('2. Evaluate model')
     print('3. Test by single img')
@@ -88,17 +84,37 @@ while True:
     choice = input('Input your choice: ')
 
     if choice == '1':
-        load_id = input('Please input the ID of the model to be loaded, enter 0 if you dont have it:')
-        if load_id != '0':
-            epp = input('Please input the epoch:')
-            set_random_seeds(load_id)
-            # define model
-            if ATTENTION:
-                model.load_state_dict(torch.load(f'models/{load_id}/cnn_with_attention{load_id}_{epp}.pth'))
+        print('1. Only set random seed.')
+        print('2. Load from existed model.')
+        choice1 = input('Input your choice.')
+        if choice1 == '2':
+            load_id = input('Please input the ID of the model to be loaded, enter 0 if you dont have it:')
+            if load_id != '0':
+                epp = input('Please input the epoch:')
+                step_num = input('Please input the step num:')
+                set_random_seeds(int(load_id))
+                # define model
+                if ATTENTION:
+                    model.load_state_dict(torch.load(f'models/{load_id}/cnn_with_attention{load_id}_{epp}_{step_num}.pth'))
+                else:
+                    model.load_state_dict(torch.load(f'models/{load_id}/cnn{load_id}_{epp}_{step_num}.pth'))
+                model.eval().to(device)
             else:
-                model.load_state_dict(torch.load(f'models/{load_id}/cnn{load_id}_{epp}.pth'))
-            model.eval().to(device)
-        else:
+                if ATTENTION:
+                    # define model
+                    model = CNNWithAttention(num_classes=num_classes).to(device)
+                    optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
+                    scheduler = CosineAnnealingLR(optimizer, T_max=num_epochs, eta_min=0.0001)
+                    criterion = nn.CrossEntropyLoss()
+                else:
+                    # define model
+                    model = CNN(num_classes=num_classes).to(device)
+                    optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
+                    scheduler = CosineAnnealingLR(optimizer, T_max=num_epochs, eta_min=0.0001)
+                    criterion = nn.CrossEntropyLoss()
+        elif choice1 == '1':
+            seed_value_1 = input('Input the random seed num:')
+            set_random_seeds(int(seed_value_1))
             if ATTENTION:
                 # define model
                 model = CNNWithAttention(num_classes=num_classes).to(device)
@@ -111,6 +127,9 @@ while True:
                 optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
                 scheduler = CosineAnnealingLR(optimizer, T_max=num_epochs, eta_min=0.0001)
                 criterion = nn.CrossEntropyLoss()
+        else:
+            print('Wrong.')
+            break
 
         if LOG:
             note = input('NOTE:')

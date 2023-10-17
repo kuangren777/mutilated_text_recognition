@@ -32,8 +32,6 @@ def parameters_changed(model, last_parameters):
     return False
 
 
-
-
 def train(
         id: int,
         model: nn.Module,
@@ -78,11 +76,7 @@ def train(
             # else:
             #     print("Parameters did NOT change!")
 
-
-
             # last_parameters = [p.clone().detach() for p in model.parameters()]
-
-
 
             if log and i % 50 == 0:
                 # print(loss)
